@@ -1,5 +1,9 @@
 {{ $_hugo_config := `{ "version": 1 }` }}
 <blockquote cite="{{ .Get "cite" }}">
   {{ .Inner }}
+  {{ if and (.Get "footerlink") (.Get "footer") }}
+  <footer><a href="{{ .Get "footerlink" }}">{{ .Get "footer" }}</a></footer>
+  {{ else if (.Get "footer") }}
   <footer>{{ .Get "footer" }}</footer>
+  {{ end }}
 </blockquote>
