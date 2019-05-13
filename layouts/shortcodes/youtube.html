@@ -1,0 +1,6 @@
+{{- $ytHost := "www.youtube-nocookie.com" -}}
+{{- $id := .Get "id" | default (.Get 0) -}}
+{{- $title := .Get "title" | default "YouTube Video" -}}
+<figure class="iframe-wrapper">
+  <iframe src="//{{ $ytHost }}/embed/{{ $id }}" allowfullscreen title="{{ $title }}"></iframe>
+</figure>
