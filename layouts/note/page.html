@@ -1,0 +1,10 @@
+{{ define "breadcrumb" }}
+{{ partial "breadcrumb.html" . }}
+{{ end }}
+{{ define "main" }}
+<article id="skip-to-content" role="article">
+  <section class="content e-content note" role="region" aria-label="article content">
+    {{ .Content }}
+  </section>
+</article>
+{{ end }}

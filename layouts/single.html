@@ -7,9 +7,9 @@
 <article class="h-entry" id="skip-to-content" role="article" aria-labelledby="{{ anchorize .Title }}">
   <header aria-labelledby="{{ anchorize .Title }}" role="heading" aria-level="1">
     <hgroup>
-      <h1 class ="p-name" id="{{ anchorize .Title }}"><a class="u-url" href="{{ .Permalink }}">{{ .Title }}</a></h1>
-      {{- with .Params.title_sub }}<h2>{{ . }}</h2>{{- end }}
-      {{- with .Params.headline }}<h3>{{ . }}</h3>{{- end }}
+        <h1 class ="p-name" id="{{ anchorize .Title }}"><a class="u-url" href="{{ .Permalink }}">{{ .Title }}</a></h1>
+        {{- with .Params.title_sub }}<h2>{{ . }}</h2>{{- end }}
+        {{- with .Params.headline }}<h3>{{ . }}</h3>{{- end }}
     </hgroup>
     <p class="colophon">Written by <a class="p-author h-card" href="/">{{ partial "author-name.html" .Site.Params.Author }}</a> on
       {{ with .Date }}<time class="dt-published" aria-label="Published On" datetime="{{ dateFormat $.Site.Params.iso8601_format . }}">{{ dateFormat "2006-01-02" . }}</time>{{- end }}

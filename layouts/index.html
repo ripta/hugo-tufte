@@ -1,6 +1,6 @@
 {{ define "head-title" }}
-  {{- $paginator := .Paginate (where .Site.RegularPages "Type" "post") .Site.Params.pagination_size }}
-  {{- if eq 1 $paginator.PageNumber }}
+{{- $paginator := .Paginate (where .Site.RegularPages "Type" "not in" (slice "page" "about")) .Site.Params.pagination_size }}
+{{- if eq 1 $paginator.PageNumber }}
     <title>HTA:{{ .Title }}</title>
   {{- else }}
     <title>HTB:{{ .Title }} (page {{ $paginator.PageNumber }})</title>
@@ -17,7 +17,7 @@
   </div>
 {{ end }}
 {{ define "main" }}
-  <h1 id="skip-to-content">Blog Posts</h1>
+  <h1 id="skip-to-content">Activity</h1>
   <section class="articles" aria-labelledby="skip-to-content">
     {{ $paginator := .Paginate (where .Site.RegularPages "Type" "post") .Site.Params.pagination_size }}
     {{ range $index, $object := $paginator.Pages }}

@@ -1,0 +1,10 @@
+{{ define "breadcrumb" }}
+{{ partial "breadcrumb.html" . }}
+{{ end }}
+{{ define "main" }}
+<article id="skip-to-content" role="article">
+    <header>
+        <h1 id="{{ anchorize .Title }}">Note</h1>
+    </header>
+</article>
+{{ end }}
