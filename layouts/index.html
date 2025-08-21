@@ -23,7 +23,7 @@
     {{ range $index, $object := $paginator.Pages }}
       {{ with $object }}
         {{ .Scratch.Set "index" $index }}
-        {{ .Render "index-summary" }}
+        {{ .Render "summary" }}
       {{- end }}
     {{- end }}
   </section>
