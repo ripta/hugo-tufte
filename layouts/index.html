@@ -1,10 +1,10 @@
 {{ define "head-title" }}
 {{- $paginator := .Paginate (where .Site.RegularPages "Type" "not in" (slice "page" "about")) .Site.Params.pagination_size }}
 {{- if eq 1 $paginator.PageNumber }}
-    <title>HTA:{{ .Title }}</title>
-  {{- else }}
-    <title>HTB:{{ .Title }} (page {{ $paginator.PageNumber }})</title>
-  {{- end }}
+    <title>{{ .Title }}</title>
+{{- else }}
+    <title>{{ .Title }} (page {{ $paginator.PageNumber }})</title>
+{{- end }}
 {{ end }}
 {{ define "breadcrumb" }}
   {{- $paginator := .Paginate (where .Site.RegularPages "Type" "post") .Site.Params.pagination_size }}
