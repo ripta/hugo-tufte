@@ -15,9 +15,9 @@
     {{ partial "relationships.html" . }}
     {{ partial "metaline.html" . }}
     <footer>
-      <p class="colophon">Written by <span class="p-author hcard">{{ partial "author-name.html" .Site.Params.Author }}</span> on
+      <p class="colophon"><span class="authorship">Written by <span class="p-author hcard">{{ partial "author-name.html" .Site.Params.Author }}</span></span>
         {{ with .Date }}<time class="dt-published" aria-label="Published On" datetime="{{ dateFormat $.Site.Params.iso8601_format . }}">{{ dateFormat "2006-01-02" . }}</time> {{- end }}
-        {{- with .Lastmod }}, updated <time class="dt-updated" datetime="{{ dateFormat $.Site.Params.iso8601_Format . }}">{{ dateFormat "2006-01-02" . }}</time> {{- end }}
+        {{- with .Lastmod }}<span class="update-details">, updated <time class="dt-updated" datetime="{{ dateFormat $.Site.Params.iso8601_Format . }}">{{ dateFormat "2006-01-02" . }}</time></span> {{- end }}
       </p>
       <p class='read-more'><a class="" href="{{ .RelPermalink }}">Read more…</a></p>
    </footer>
