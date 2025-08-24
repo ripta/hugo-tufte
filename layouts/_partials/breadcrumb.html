@@ -22,7 +22,7 @@
     <a href="{{ .p1.Site.BaseURL }}"><i class="fa fa-home"></i> Home</a> ⟫
     <a href="{{ .p1.Site.BaseURL }}{{ .p1.Data.Plural }}/" class="{{ if eq .p1 .p2 }}active{{ end }}">{{ .p1.Data.Plural | title }}</a>
   {{- else if and ( eq .p1.Type "page" ) (not (eq .p1.Kind "home"))  }}
-    <a href="{{ .p1.Site.BaseURL }}"><i class="fa fa-home"></i> Page:Home</a> ⟫
+    <a href="{{ .p1.Site.BaseURL }}"><i class="fa fa-home"></i> Home</a> ⟫
     <a class="active" href="{{ .p1.Permalink }}">{{ .p1.Title }}</a>
   {{- else }}
     {{- if .p1.Parent }}
