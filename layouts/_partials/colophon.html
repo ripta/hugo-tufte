@@ -1,0 +1,5 @@
+<p class="colophon">
+  <a class="p-author h-card" href="/">{{ partial "author-name.html" .Site.Params.Author }}</a>
+  {{-  with .Date }}<time class="dt-published" aria-label="Published on" datetime="{{ dateFormat $.Site.Params.iso8601_format . }}">{{ dateFormat "2006-01-02" . }}</time>{{- end -}}
+  {{- with .Lastmod }}<time class="dt-updated" datetime="{{ dateFormat $.Site.Params.iso8601_Format . }}">{{ dateFormat "2006-01-02" . }}</time>{{- end -}}
+</p>

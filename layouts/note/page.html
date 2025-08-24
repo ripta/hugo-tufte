@@ -2,9 +2,16 @@
 {{ partial "breadcrumb.html" . }}
 {{ end }}
 {{ define "main" }}
-<article id="skip-to-content" role="article">
-  <section class="content e-content note" role="region" aria-label="article content">
-    {{ .Content }}
-  </section>
-</article>
+  <article id="skip-to-content" class=" h-entry t-{{ .Type | anchorize }}" role="article">
+    <header>
+      {{ partial "colophon.html" . }}
+    </header>
+    <section class="content e-content note" role="region" aria-label="article content">
+      {{ .Content }}
+    </section>
+    <section class="content meta">
+      {{ partial "metaline.html" . }}
+      {{ partial "relationships.html" . }}
+    </section>
+  </article>
 {{ end }}
