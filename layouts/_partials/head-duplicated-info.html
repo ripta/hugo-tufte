@@ -9,6 +9,9 @@
  {{ (resources.Get "css/print.scss" | css.Sass | resources.Minify).Content | safeCSS }}
 </style>
 <style type="text/css" media="screen,print">
+ {{ (resources.Get "css/syntax.css" | resources.Minify).Content | safeCSS }}
+</style>
+<style type="text/css" media="screen,print">
  {{ (resources.Get "css/overrides.scss" | css.Sass | resources.Minify).Content | safeCSS }}
 </style>
 {{- $tufteAmpCssResource := resources.Get "css/tufte-amp.scss" | css.Sass| resources.Minify | resources.Fingerprint }}
