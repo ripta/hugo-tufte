@@ -1,6 +1,6 @@
 <section class="content" id="webmentions">
   {{ $mentions := .Scratch.Get "mentions" }}
-  {{ with $mentions.likes }}
+  {{ with index $mentions "likes" }}
     <h3>Likes</h3>
     {{ $.Scratch.Set "class" "p-like" }}
     <ul class=facepile>
@@ -11,7 +11,7 @@
     <div style="clear:both;"></div>
   {{ end -}}
 
-  {{- with $mentions.reposts }}
+  {{- with index $mentions "reposts" }}
     <h3>Reposts</h3>
     {{ $.Scratch.Set "class" "p-repost" }}
     <ul class=facepile>
@@ -22,7 +22,7 @@
     <div style="clear:both;"></div>
   {{ end -}}
 
-  {{ with $mentions.replies }}
+  {{- with index $mentions "replies" -}}
     <h3>Replies</h3>
     <ul id="replies">
       {{ range . }}
@@ -31,19 +31,19 @@
           {{ $time = time . }}
         {{ else }}
           {{ $time = time (index . "wm-received") }}
+        {{ end }}
+        <li class="p-comment h-cite comment">
+          {{ with  (index . "author") }}
+            {{ partial "author.html" . }}
           {{ end }}
-          <li class="p-comment h-cite comment">
-            {{ with  (index . "author") }}
-              {{ partial "author.html" . }}
-            {{ end }}
-            {{ partial "wm-content.html" . }}
-            {{ partial "wm-metaline.html" . }}
-          </li>
+          {{ partial "wm-content.html" . }}
+          {{ partial "wm-metaline.html" . }}
+        </li>
       {{ end }}
     </ul>
     <div style="clear:both;"></div>
-  {{ end }}
-  {{ with (append $mentions.mentions $mentions.others) }}
+    {{ end }}
+    {{ with (append $mentions.mentions $mentions.others) }}
     <h3>Other Mentions</h3>
     <ul id="other-mentions">
       {{ range . }}
