@@ -1,24 +1,27 @@
 {{ $index := .Scratch.Get "index" }}
 {{ partial "init-article-metadata.html" . }}
+{{ define "metaline" }}
+  {{ partial "metaline.html" .  }}
+{{ end }}
 <article class="h-entry">
-    <header>
-        <h2 class="p-name"><a accesskey="{{ mod (add 1 $index) 10 }}" href="{{ .RelPermalink }}" class="u-url u-uid" id="ctrl+mod+{{ $index }}" rel="bookmark"><cite>{{ .Title }}</cite></a></h2>
-        {{- if .Params.tags }}
-        <ul aria-label="Tags" class="tags">
-            {{- range .Params.tags }}
-            <li><a rel="tag" aria-label="Posts tagged with “{{ . }}”" href="{{ "tags" | absURL }}/{{ . | urlize }}">#{{ . | anchorize }}</a></li>
-            {{- end }}
-        </ul>
-        {{ end }}
-    </header>
-    {{ partial "summary-section.html" . }}
-    {{ partial "relationships.html" . }}
-    {{ partial "metaline.html" . }}
-    <footer>
-      <p class="colophon"><span class="authorship">Written by <span class="p-author hcard">{{ partial "author-name.html" .Site.Params.Author }}</span></span>
-        {{ with .Date }}<time class="dt-published" aria-label="Published On" datetime="{{ dateFormat $.Site.Params.iso8601_format . }}">{{ dateFormat "2006-01-02" . }}</time> {{- end }}
-        {{- with .Lastmod }}<span class="update-details">, updated <time class="dt-updated" datetime="{{ dateFormat $.Site.Params.iso8601_Format . }}">{{ dateFormat "2006-01-02" . }}</time></span> {{- end }}
-      </p>
-      <p class='read-more'><a class="" href="{{ .RelPermalink }}">Read more…</a></p>
-   </footer>
+  <header>
+    <h2 class="p-name"><a accesskey="{{ mod (add 1 $index) 10 }}" href="{{ .RelPermalink }}" class="u-url u-uid" id="ctrl+mod+{{ $index }}" rel="bookmark"><cite>{{ .Title }}</cite></a></h2>
+    {{- if .Params.tags }}
+      <ul aria-label="Tags" class="tags">
+        {{- range .Params.tags }}
+          <li><a rel="tag" aria-label="Posts tagged with “{{ . }}”" href="{{ "tags" | absURL }}/{{ . | urlize }}">#{{ . | anchorize }}</a></li>
+        {{- end }}
+      </ul>
+    {{ end }}
+  </header>
+  {{ partial "summary-section.html" . }}
+  {{ partial "relationships.html" . }}
+  {{ partial "metaline.html" . }}
+  <footer>
+    <p class="colophon"><span class="authorship">Written by <span class="p-author hcard">{{ partial "author-name.html" .Site.Params.Author }}</span></span>
+      {{ with .Date }}<time class="dt-published" aria-label="Published On" datetime="{{ dateFormat $.Site.Params.iso8601_format . }}">{{ dateFormat "2006-01-02" . }}</time> {{- end }}
+      {{- with .Lastmod }}<span class="update-details">, updated <time class="dt-updated" datetime="{{ dateFormat $.Site.Params.iso8601_Format . }}">{{ dateFormat "2006-01-02" . }}</time></span> {{- end }}
+    </p>
+    <p class='read-more'><a class="" href="{{ .RelPermalink }}">Read more…</a></p>
+  </footer>
 </article>

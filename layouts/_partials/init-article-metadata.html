@@ -1,29 +1,20 @@
-{{- $slug := .RelPermalink | sha256 }}
-{{  $all_mentions := index $.Site.Data.mentions $slug | default slice }}
-{{ $likes := slice }}
-{{ $reposts := slice }}
-{{ $replies := slice }}
-{{ $mentions := slice }}
-{{ $rest := slice }}
-
-{{ range $all_mentions }}
-{{ $type := (index . "wm-property") }}
-{{ if (eq $type "like-of") }}
-{{ $likes = $likes | append . }}
-{{ else if (eq $type "repost-of") }}
-{{ $reposts = $reposts | append . }}
-{{ else if (eq $type "in-reply-to") }}
-{{ $replies = $replies | append . }}
-{{ else if (eq $type "mention-of") }}
-{{ $mentions = $mentions | append . }}
-{{ else }}
-{{ $rest = $rest | append . }}
-{{ end }}
+{{- $s := newScratch }}
+{{ $s.Set "Data" site.Data.mentions }}
+{{ range (split .Path "/" | after 1) }}
+  {{ $s.Set "Data" (index ($s.Get "Data") .) -}}
 {{ end }}
 
-{{ .Scratch.SetInMap "mentions" "all" $all_mentions }}
-{{ .Scratch.SetInMap "mentions" "likes" $likes }}
-{{ .Scratch.SetInMap "mentions" "reposts" $reposts }}
-{{ .Scratch.SetInMap "mentions" "replies" $replies }}
-{{ .Scratch.SetInMap "mentions" "mentions" $mentions }}
-{{ .Scratch.SetInMap "mentions" "others" $rest -}}
+{{ $all_mentions := index site.Data.mentions (split .Path "/" | after 1 | append "mentions") | default slice }}
+{{ $known_keys := slice "like-of" "repost-of" "in-reply-to" "mention-of" }}
+{{ $likes := where $all_mentions "wm-property" "like-of" }}
+{{ $reposts := where $all_mentions "wm-property" "repost-of" }}
+{{ $replies := where $all_mentions "wm-property" "in-reply-to" }}
+{{ $mentions := where $all_mentions "wm-property" "mention-of" }}
+{{ $rest := where $all_mentions "wm-property" "not in" $known_keys }}
+
+{{ .Store.SetInMap "mentions" "all" $all_mentions }}
+{{ .Store.SetInMap "mentions" "likes" $likes }}
+{{ .Store.SetInMap "mentions" "reposts" $reposts }}
+{{ .Store.SetInMap "mentions" "replies" $replies }}
+{{ .Store.SetInMap "mentions" "mentions" $mentions }}
+{{ .Store.SetInMap "mentions" "others" $rest -}}

@@ -1,11 +1,78 @@
+{{- $all_mentions := index site.Data.mentions (split (path.Dir .RelPermalink) "/" | after 1 | append "mentions" ) | default slice -}}
+{{- $known_keys := slice "like-of" "repost-of" "in-reply-to" "mention-of" -}}
+{{ $likes := where $all_mentions "wm-property" "like-of" -}}
+{{ $reposts := where $all_mentions "wm-property" "repost-of" -}}
+{{ $replies := where $all_mentions "wm-property" "in-reply-to" -}}
+{{ $mentions := where $all_mentions "wm-property" "mention-of" -}}
+{{ $rest := where $all_mentions "wm-property" "not in" $known_keys -}}
+
 <footer class="metaline">
-  {{- with .Scratch.Get "mentions" }}
   <ul class="response-summary">
-    <li>{{ .likes | len }} {{ if eq 1 (len .likes) }}like{{ else }}likes{{ end }}</li>
-    <li>{{ .reposts | len }} {{ if eq 1 (len .reposts) }}repost{{ else }}reposts{{ end }}</li>
-    <li>{{ .replies | len }} {{ if eq 1 (len .replies) }}reply{{ else }}replies{{ end }}</li>
-    <li>{{ .mentions | len }} {{ if eq 1 (len .mentions) }}mention{{ else }}mentions{{ end }}</li>
+    <li>{{ $likes | len }} {{ if eq 1 (len $likes) }}like{{ else }}likes{{ end }}</li>
+    <li>{{ $reposts | len }} {{ if eq 1 (len $reposts) }}repost{{ else }}reposts{{ end }}</li>
+    <li>{{ $replies | len }} {{ if eq 1 (len $replies) }}reply{{ else }}replies{{ end }}</li>
+    <li>{{ $mentions | len }} {{ if eq 1 (len $mentions) }}mention{{ else }}mentions{{ end }}</li>
   </ul>
-  {{ end -}}
 </footer>
-      
+{{ if eq "page" page.Kind }}
+  <section class="content" id="webmentions">
+    {{ with $likes }}
+      <h3>Likes</h3>
+      <ul class="facepile">
+        {{ range . }}
+          {{ partial "facepile-entry.html" (dict "mention" . "class" "p-like") }}
+        {{ end }}
+      </ul>
+      <div style="clear:both;"></div>
+    {{- end -}}
+    {{- with $reposts }}
+      <h3>Reposts</h3>
+      <ul class=facepile>
+        {{ range . }}
+          {{ partial "facepile-entry.html" (dict "mention" . "class" "p-repost") }}
+        {{ end }}
+      </ul>
+      <div style="clear:both;"></div>
+  {{ end -}}
+
+  {{- with $replies -}}
+    <h3>Replies</h3>
+    <ul id="replies">
+      {{ range . }}
+        {{ $time := time "2000-04-01" }}
+        {{ with .published }}
+          {{ $time = time . }}
+        {{ else }}
+          {{ $time = time (index . "wm-received") }}
+        {{ end }}
+        <li class="p-comment h-cite comment">
+          {{ with  (index . "author") }}
+            {{ partial "author.html" . }}
+          {{ end }}
+          {{ partial "wm-content.html" . }}
+          {{ partial "wm-metaline.html" . }}
+        </li>
+      {{ end }}
+    </ul>
+    <div style="clear:both;"></div>
+  {{ end }}
+  {{ with (append ($mentions | default slice) ($rest | default slice )) }}
+    <h3>Other Mentions</h3>
+    <ul id="other-mentions">
+      {{ range . }}
+        <li class="p-comment h-cite comment">
+
+          {{ with  (index . "author") }}
+            {{ partial "author.html" . }}
+          {{ end }}
+          {{ partial "wm-content.html" . }}
+          {{ partial "wm-metaline.html" . }}
+
+        </li>
+
+      {{ end }}
+    </ul>
+    <div style="clear:both;"></div>
+  {{ end }}
+  </section>
+{{ end }}
