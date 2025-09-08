@@ -1,10 +1,9 @@
-{{- $all_mentions := index site.Data.mentions (split (path.Dir .RelPermalink) "/" | after 1 | append "mentions" ) | default slice -}}
+{{- $all_mentions := index site.Data.mentions.all .RelPermalink | default dict -}}
 {{- $known_keys := slice "like-of" "repost-of" "in-reply-to" "mention-of" -}}
-{{ $likes := where $all_mentions "wm-property" "like-of" -}}
-{{ $reposts := where $all_mentions "wm-property" "repost-of" -}}
-{{ $replies := where $all_mentions "wm-property" "in-reply-to" -}}
-{{ $mentions := where $all_mentions "wm-property" "mention-of" -}}
-{{ $rest := where $all_mentions "wm-property" "not in" $known_keys -}}
+{{ $likes := index $all_mentions "like-of" | default slice -}}
+{{ $reposts := index $all_mentions "repost-of" | default slice -}}
+{{ $replies := index $all_mentions "in-reply-to" | default slice -}}
+{{ $mentions := index $all_mentions "mention-of" | default slice -}}
 
 <footer class="metaline">
   <ul class="response-summary">
@@ -56,7 +55,7 @@
     </ul>
     <div style="clear:both;"></div>
   {{ end }}
-  {{ with (append ($mentions | default slice) ($rest | default slice )) }}
+  {{ with $mentions }}
     <h3>Other Mentions</h3>
     <ul id="other-mentions">
       {{ range . }}
