@@ -13,7 +13,7 @@
     {{- with .Params.Cover -}}
       <figure class="cover-thumbnail">
         <img
-          src="{{ .m }}"
+          src="{{ with resources.GetRemote .m }}{{ .RelPermalink }}{{ else }}{{ .m }}{{ end }}"
           alt="The cover of {{ $.Title }}">
         <figcaption>{{ $.Title }}</figcaption>
       </figure>

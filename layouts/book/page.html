@@ -20,7 +20,7 @@
       {{- with .Params.Cover -}}
         <figure class="cover-thumbnail">
           <img
-            src="{{ .m }}"
+            src="{{ with resources.GetRemote .m }}{{ .RelPermalink }}{{ else }}{{ .m }}{{ end }}"
             alt="{{ if .description }}{{ .description }}{{ else }}The cover of {{ $.Title }}{{ end }}">
           {{-  with .caption -}}
             <figcaption>{{ . | markdownify }}</figcaption>
