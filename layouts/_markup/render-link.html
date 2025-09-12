@@ -1,0 +1,12 @@
+{{- $title := .Title -}}
+{{- $class := "" -}}
+{{- with split .Title ":" -}}
+  {{- $class = trim (index . 0) ".:" -}}
+  {{- $title = trim (index . 1) " " -}}
+{{- end -}}
+<a href="{{ .Destination | safeURL }}"
+   {{- with $title }} title="{{ . }}"{{ end -}}
+   {{- with $class }} class="{{ . }}"{{ end -}}
+>
+  {{- with .Text -}}{{ . }}{{ end -}}
+</a>
