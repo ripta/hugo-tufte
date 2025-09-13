@@ -1,8 +1,7 @@
-{{ $index := .Scratch.Get "index" }}
-{{ partial "init-article-metadata.html" . }}
 {{ define "metaline" }}
   {{ partial "metaline.html" .  }}
 {{ end }}
+{{ $index := .Scratch.Get "index" }}
 <article class="h-entry">
   <header>
     <h2 class="p-name"><a accesskey="{{ mod (add 1 $index) 10 }}" href="{{ .RelPermalink }}" class="u-url u-uid" id="ctrl+mod+{{ $index }}" rel="bookmark"><cite>{{ .Title }}</cite></a></h2>
