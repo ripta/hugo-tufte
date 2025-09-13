@@ -6,12 +6,12 @@
     <header>
       {{ partial "colophon.html" . }}
     </header>
+    {{ partial "relationships.html" . }}
     <section class="content e-content note" role="region" aria-label="article content">
       {{ .Content }}
     </section>
     <section class="content meta">
       {{ partial "metaline.html" . }}
-      {{ partial "relationships.html" . }}
     </section>
   </article>
 {{ end }}

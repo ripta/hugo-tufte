@@ -1,5 +1,6 @@
 {{ $blockOpt := dict "display" "block" }}
 <section class="p-summary" role="summary">
+  {{ partial "relationships.html" }}
   {{- if isset .Params "headline" }}
     {{ .Params.headline | .Page.RenderString $blockOpt }}
   {{- else if isset .Params "description" }}
