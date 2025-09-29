@@ -1,20 +1,18 @@
-
 {{ $index := .Scratch.Get "index" }}
-{{ partial "init-article-metadata.html" . }}
 <article class="h-entry note">
-    <header>
-        <h2><a accesskey="{{ mod (add 1 $index) 10 }}" href="{{ .RelPermalink }}" id="ctrl+mod+{{ $index }}" rel="bookmark"><cite><time class="dt-published date" aria-label="Published On" datetime="{{dateFormat $.Site.Params.iso8601_format .Date}}">{{ dateFormat "2006-01-02" .Date }}</time><span class="time">{{ dateFormat " @15:04" .Date }}</span></cite></a></h2>
-        {{- if .Params.tags }}
-        <ul aria-label="Tags" class="tags">
-            {{- range .Params.tags }}
+  <header>
+    <h2><a accesskey="{{ mod (add 1 $index) 10 }}" href="{{ .RelPermalink }}" id="ctrl+mod+{{ $index }}" rel="bookmark"><cite><time class="dt-published date" aria-label="Published On" datetime="{{dateFormat $.Site.Params.iso8601_format .Date}}">{{ dateFormat "2006-01-02" .Date }}</time><span class="time">{{ dateFormat " @15:04" .Date }}</span></cite></a></h2>
+    {{- if .Params.tags }}
+      <ul aria-label="Tags" class="tags">
+        {{- range .Params.tags }}
           <li><a rel="tag" aria-label="Posts tagged with “{{ . }}”" href="{{ "tags" | absURL }}/{{ . | urlize }}">#{{ . | anchorize }}</a></li>
-            {{- end }}
-        </ul>
-        {{ end }}
-    </header>
-    {{ partial "relationships.html" . }}
-    <section class="content e-content" role="region">
-      {{- .Content -}}
-    </section>
-    {{ partial "metaline.html" . }}
+          {{- end }}
+      </ul>
+      {{ end }}
+  </header>
+  {{ partial "relationships.html" . }}
+  <section class="content e-content" role="region">
+    {{- .Content -}}
+  </section>
+  {{ partial "metaline.html" . }}
 </article>

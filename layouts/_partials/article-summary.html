@@ -12,6 +12,14 @@
         {{- end }}
       </ul>
     {{ end }}
+    {{- with .Params.Cover -}}
+      <figure class="cover-thumbnail">
+        <img
+          src="{{ with resources.GetRemote .m }}{{ .RelPermalink }}{{ else }}{{ .m }}{{ end }}"
+          alt="The cover of {{ $.Title }}">
+        <figcaption><cite class="p-read-of">{{ .Params.work.title }}</figcaption>
+      </figure>
+    {{- end -}}
   </header>
   {{ partial "summary-section.html" . }}
   {{ partial "metaline.html" . }}
